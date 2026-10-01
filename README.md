@@ -9,6 +9,87 @@
 
 [中文](./README-zh_CN.md) | English
 
+## This branch: Mini-ryoku
+
+The `mini-ryoku` branch replaces the stock keymap with a ZMK port of
+[Mini-ryoku](https://github.com/ChuseCubr/mini-ryoku) by ChuseCubr (branch
+`combos`, commit `7a710dd`, GPL-2.0-or-later), a 34-key Miryoku adaptation:
+Colemak-DH, bottom-row mods, a one-shot symbol layer and combos. Upstream only
+ships QMK; `config/cradio.keymap` is a hand port. The Codex Micro layer and
+snippets are not built on this branch. The sections further down describe the
+stock keymap on `main`.
+
+Mods (`Gui Alt Ctrl Shift` from the pinky inwards, hold) are on the bottom row.
+`V` is also Ctrl, for one-handed copy. Hold-taps: balanced (QMK permissive
+hold), 150 ms tapping term, 100 ms quick tap.
+
+```
+Base   Q      W      F      P      B        J      L      U      Y      Bspc
+       A      R      S      T      G        M      N      E      I      O
+       Z/Gui  X/Alt  C/Ctl  D/Sft  V/Ctl    K      H/Sft  ,/Ctl  ./Alt  //Gui
+                            Space  Tab/Fun  Enter  Sym (one-shot)
+
+Fun    -      F4     F5     F6     F9       F12    WhDn   MsUp   WhUp   Vol+
+       -      MClk   RClk   LClk   F8       F11    MsLeft MsDown MsRght Vol-
+       Gui    F1/Alt F2/Ctl F3/Sft F7       F10    Prev/Sft Play/Ctl Next/Alt Mute/Gui
+                            -      (held)   -      Sys (hold)
+
+Sym    [      5      6      7      ]        PgUp   Home   Up     End    Bspc
+       ;      9      0      1      =        PrtSc  Left   Down   Right  Del
+       `/Gui  2/Alt  3/Ctl  4/Sft  \        PgDn   Shift  Ctrl   Alt    Gui
+                            Space  8        Enter  -
+
+Sys    Boot   BT0    BT1    BT2    BT3      BT4    -      -      -      Boot
+       Reset  -      -      -      BTclr    OutTog -      -      -      Reset
+       -      -      -      -      SoftOff  Studio -      -      -      -
+```
+
+Shifted symbols: on Sym, hold the right-hand Shift (`H` position) and tap the
+number. Sym is a one-shot layer: tap it for one key, or hold it to use it like
+a normal layer key.
+
+Combos (all layers, 25 ms):
+
+| Keys (Base positions) | Output |
+| :--- | :--- |
+| W + F | Esc |
+| F + P | `!` |
+| L + U | `-` |
+| U + Y | `'` |
+| W + F + P | Caps Lock |
+| N + E + I | Go to Base |
+| H + , + . | Go to Sym (locked) |
+| L + U + Y | Go to Fun (locked) |
+
+**Sys layer** (not in Mini-ryoku): hold Tab (Fun) with the left thumb, then
+hold the right outer thumb. It has the bootloader and reset keys on both halves
+(each acts on the half you press it on), Bluetooth profiles 0 to 4, clear the
+current profile, USB/BLE output toggle, ZMK Studio unlock and soft off.
+
+**Home-row mods switch:** uncomment `#define MINIRYOKU_HOME_ROW_MODS` near the
+top of `config/cradio.keymap` to move Base's mods to the home row
+(`A R S T` = Gui Alt Ctrl Shift, `N E I O` = Shift Ctrl Alt Gui). Base's
+bottom row then becomes plain keys, `V` included. Fun and Sym keep their
+bottom-row mods.
+
+**macOS note:** Mini-ryoku is designed for Windows/Linux. Gui (Cmd on a Mac)
+is on the pinkies (`Z`, `/`, Sym `` ` ``, Fun's left pinky key and `Mute`), and
+`V` = Ctrl is meant for one-handed Ctrl+C/Ctrl+V. On macOS, copy and paste use
+Cmd, so the one-handed copy needs the pinky (`Z`) instead of `V`. Keys are
+left as upstream.
+
+Deviations from upstream Mini-ryoku:
+
+- Added the Sys layer on Fun's unused right outer thumb (`KC_NO` upstream).
+- One-shot Sym (`&sl`) ignores modifier presses, so holding Shift keeps the
+  layer up as QMK's OSL does. It times out after 60 s; QMK's has no timeout.
+- Optional home-row-mods switch (off by default).
+- Mouse speed and acceleration come from the NXTKB stock keymap, not QMK's
+  defaults.
+- Only Base, Fun and Sym are ported; the Game and blank layers are not.
+- The Fun layer follows upstream's keycodes and image (`B`/`G`/`V` = F9/F8/F7)
+  where the comment art in `layout.h` disagrees.
+
 This repository contains the ZMK firmware configuration for the NXTKB Ferris
 Sweep keyboard. It is based on the [Sweep](https://github.com/davidphilipbarr/Sweep)
 layout, builds with [ZMK](https://github.com/zmkfirmware/zmk), and supports

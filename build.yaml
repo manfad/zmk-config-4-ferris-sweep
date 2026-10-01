@@ -21,7 +21,7 @@ include:
   # keyboard: cradio sweep
   - board: nice_nano//zmk
     shield: cradio_left
-    snippet: studio-rpc-usb-uart nxtkb-codex-micro-usb nxtkb-codex-micro-ble nxtkb-codex-micro-compat-identity
+    snippet: studio-rpc-usb-uart
     #snippet: zmk-usb-logging
   - board: nice_nano//zmk
     shield: cradio_right
